@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+import AddRecipePage from "./pages/AddRecipePage";
+import RecipesPage from "./pages/RecipesPage";
+import "./styles.css";
+
+function AppContent() {
+  const location = useLocation();
+  const showNavbar = location.pathname !== "/"; // Masquer la navbar uniquement sur la page de connexion
+
+  return (
+    <>
+      {showNavbar && <Navbar />}
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/add-recipe" element={<AddRecipePage />} />
+        <Route path="/recipes" element={<RecipesPage />} />
+      </Routes>
+    </>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <AppContent />
+    </Router>
   );
 }
 
