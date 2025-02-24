@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  mongo-users:
+    image: mongo
+    container_name: mongo-users
+    ports:
+      - "27017:27017"
+
+  mongo-recipes:
+    image: mongo
+    container_name: mongo-recipes
+    ports:
+      - "27018:27017"
+
+  users-service:
+    build: ./users-service
+    ports:
+      - "4001:4001"
+    depends_on:
+      - mongo-users
+
+  recipes-service:
+    build: ./recipes-service
+    ports:
+      - "4002:4002"
+    depends_on:
+      - mongo-recipes
+
+  gateway-service:
+    build: ./gateway-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - users-service
+      - recipes-service
