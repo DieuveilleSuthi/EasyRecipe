@@ -8,7 +8,7 @@ function AddRecipePage() {
   const navigate = useNavigate(); 
 
   const handleAddRecipe = async () => {
-    await fetch("http://172.20.10.4:8080/api/recipes/recipes", {
+    await fetch("http://gateway-service:8080/api/recipes/recipes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, ingredients, instructions, author: "Utilisateur 1" }),

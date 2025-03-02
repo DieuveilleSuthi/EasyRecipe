@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs"); // Remplacé bcrypt par bcryptjs
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -15,7 +15,7 @@ const User = require("./models/User");
 // Inscription
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10); // Utilise bcryptjs pour le hash
   const user = new User({ username, password: hashedPassword });
   await user.save();
   res.json({ message: "Inscription réussie !" });
@@ -25,7 +25,7 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
-  if (!user || !(await bcrypt.compare(password, user.password))) {
+  if (!user || !(await bcrypt.compare(password, user.password))) { // Utilise bcryptjs pour la comparaison
     return res.status(401).json({ message: "Identifiants incorrects" });
   }
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });

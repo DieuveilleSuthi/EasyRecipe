@@ -1,6 +1,6 @@
 FROM node:23.1.0
 WORKDIR /app
-COPY package*.json package-lock.json./
+COPY package*.json package-lock.json ./
 RUN npm install
 COPY . .
 EXPOSE 8080

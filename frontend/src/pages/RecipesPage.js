@@ -4,7 +4,7 @@ function RecipesPage() {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    fetch("http://172.20.10.4:8080/api/recipes/recipes")
+    fetch("http://gateway-service:8080/api/recipes/recipes")
       .then((res) => res.json())
       .then((data) => setRecipes(data));
   }, []);

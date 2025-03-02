@@ -5,12 +5,16 @@ services:
     container_name: mongo-users
     ports:
       - "27017:27017"
+    volumes:
+      - mongo-users-data:/data/db
 
   mongo-recipes:
     image: mongo
     container_name: mongo-recipes
     ports:
       - "27018:27017"
+    volumes:
+    - mongo-recipes-data:/data/db
 
   users-service:
     build: ./users-service
